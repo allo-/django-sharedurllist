@@ -1,0 +1,29 @@
+<div class="urltab tab-pane well {% if forloop.counter == 1 %}active{% endif %}" id="urltab_{{device.name}}">
+    <table class="table urllist">
+        {% for theurl in device.url_set.all %}
+        <tr>
+            <td>
+                <form class="pull-left" method="post" action="{% url "sharedurllist.views.delete_url" %}" style="display: inline">
+                    {% csrf_token %}
+                    <input type="hidden" name="url" value="{{theurl.id}}" />
+                        <input type="hidden" name="current_tab" value="#urltab_{{ device.name }}" class="current_tab" />
+                        <input type="submit" name="delete" value="del" class="btn" />
+                </form>
+                <p>
+                    {{ theurl.content }}<br />
+                    <small>({{ theurl.created }})</small>
+                </p>
+            </td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td>
+                <form method="post" action="{% url "sharedurllist.views.delete_device" %}" style="text-align: right">
+                    {% csrf_token %}
+                    <input type="hidden" name="device_id" value="{{device.id}}" class="btn" />
+                    <input type="submit" name="delete" value="delete device" class="btn" />
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>

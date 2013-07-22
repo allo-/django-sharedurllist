@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link href="{{STATIC_URL}}bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+    <script src="{{ STATIC_URL }}js/jquery.js"></script>
+    <link href="{{STATIC_URL}}style.css" rel="stylesheet" />
+    <style>
+        {% block extrastyle %}{% endblock %}
+    </style>
+    {% block extrahead %}{% endblock %}
+</head>
+<body>
+    <script src="{{STATIC_URL}}bootstrap/js/bootstrap.min.js"></script>
+    {% include "snippets/tab-bar.html" %}
+    <div class="row-fluid container">
+        <div class="span10 offset1">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+    <script>
+        $(".bookmarklet").each(function(){
+            $(this).attr("href", "javascript:void(window.open('"+window.location.protocol+"//"+window.location.host+"{% url 'sharedurllist.views.bookmarklet' %}?token="+$(this).attr("data-token")+"&url='+escape(window.location.href)))")
+        });
+    </script>
+</body>
+</html>

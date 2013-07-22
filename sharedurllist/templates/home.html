@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load url from future %}
+{% block title %}Urllists{% endblock %}
+{% block pagetitle %}Urllists{% endblock %}
+{% block content %}
+
+<div id="urltabs">
+    <div class="tabbable">
+        <div class="tab-content">
+            {% for device in devices %}
+                {% include "snippets/device-tab.html" %}
+            {% endfor %}
+            {% include "snippets/tokens-tab.html" %}
+        </div>
+    </div>
+</div>
+
+<script>
+    $("span.token").click(function(){
+        $(this).text($(this).data("token"));
+    });
+    var currentUrlTab=0;
+    var hashParameters = location.hash.substr(1).split("&");
+    for(i=0;i<hashParameters.length;i++){
+        var parts=hashParameters[i].split("_");
+        if(parts.length==2 && parts[0] == "urltab"){
+            currentUrlTab=parts[1];
+            $("a[data-devicename="+currentUrlTab+"]").tab("show");
+        }
+    }
+    $(".urltab").click(function(){window.location.hash = "urltab_" + $(this).attr("data-devicename")})
+</script>
+{% endblock %}

@@ -1,0 +1,48 @@
+<div class="tab-pane well {% if forloop.counter == 1 %}active{% endif %}" id="urltab_special-tokens">
+    <table class="table table-bordered table-hover table-condensed" style="background-color: white">
+        <tr>
+            <th> Device Name </th>
+            <th> Token </th>
+            <th> Created </th>
+            <th> Last_Used </th>
+            <th> Active </th>
+            <th> Actions </th>
+        </tr>
+        {% for token in tokens %}
+        <tr class="{% if token.is_active %}success{% else %}error{% endif %}">
+            <td> {{ token.device.name }} </td>
+            <td>
+                <span class="token" data-token="{{ token.token }}">{{ token.token|truncatechars:12 }}</a>
+            </td>
+            <td> {{ token.created }} </td>
+            <td> {{ token.last_used }} </td>
+            <td class="active_{% if token.is_active %}yes{% else %}no{% endif %}">
+                {% if token.is_active %}yes{% else %}no{% endif %}
+            </td>
+            <td>
+                <form method="post" action="{% url "sharedurllist.views.token" %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="token" value="{{ token.token }}" />
+                    {% if token.is_active %}
+                        <input type="submit" name="disable" value="disable" class="btn" />
+                    {% else %}
+                        <input type="submit" name="enable" value="enable" class="btn" />
+                    {% endif %}
+                    <input type="submit" name="delete" value="delete" class="btn" />
+                    <br />
+                    Bookmarklet: <a href="" data-token="{{ token.token }}" class="bookmarklet">add to List</a>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="6">
+                <form method="post" action="{% url "sharedurllist.views.token" %}" class="pull-right">
+                    {% csrf_token %}
+                    <input type="text" name="device" placeholder="device name" />
+                    <input type="submit" name="create" value="create" class="btn" />
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>

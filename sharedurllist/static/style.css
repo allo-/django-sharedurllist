@@ -1,0 +1,35 @@
+td.active_yes {
+    background-color: #BFB;
+}
+td.active_no {
+    background-color: #FBB;
+}
+a.bookmarklet {
+    white-space: nowrap;
+}
+.tab-pane.well {
+    margin: 0;
+    overflow: auto;
+}
+form{
+    margin: 0.3ex;
+}
+.btn{
+    vertical-align: top;
+}
+body{
+    background-color: #BCB;
+    padding-bottom: 1em;
+}
+li.pull-right {
+    float: right;
+}
+table.urllist {
+    margin: 0;
+}
+div.urltab {
+    padding-bottom: 0;
+}
+.navbar {
+    margin-bottom: 1em;
+}

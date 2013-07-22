@@ -1,0 +1,26 @@
+{% load url from future %}
+<div class="navbar">
+    <div class="navbar-inner">
+        <ul class="nav nav-tabs" data-tabs="tabs">
+            <a href="{% url 'sharedurllist.views.main' %}'" class="brand">SharedUrlList</a>
+            <li class="{% if view == "bookmarklet" %}active{% endif %}">
+                    <a 
+                        class="urltab"
+                        {% if view != "bookmarklet" %}
+                            href="{% url "sharedurllist.views.bookmarklet" %}"
+                        {% else %}
+                            data-toggle="tab"
+                        {% endif %} 
+                        data-devicename="special-bookmarklet">
+                        Bookmarklet
+                    </a>
+            </li>
+                {% include "snippets/device-tabs.html" %}
+            <li class="divider-vertical navbar-divider">
+            </li>
+            <li>
+                <a class="urltab" href="{% url 'sharedurllist.views.main' %}#urltab_special-tokens" {%if view == "home" %}data-toggle="tab"{% endif %} data-devicename="special-tokens">Token-List</a>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load url from future %}
+{% load i18n %}
+{% block title %}Bookmarklet{% endblock %}
+{% block content %}
+<div class="well">
+    {% if status %}
+        {{status}}
+        <br />
+    {% endif %}
+    {% if tokens %}
+        <table class="table table-bordered table-hover table-condensed" style="background-color: white">
+        <tr>
+            <th> Bookmarklet </th>
+            <th> Active</th>
+            <th> Token </th>
+        </tr>
+        {% for token in tokens %}
+            <tr class="{% if token.is_active %}success{% else %}error{% endif %}">
+                <td>
+                    <h4>
+                        <a class="bookmarklet" href="" data-token="{{ token.token }}">add to List</a> ({{ token.device.name }})
+                    </h4>
+                </td>
+                <td class="active_{% if token.is_active %}yes{% else %}no{% endif %}">
+                    {% if token.is_active %}yes{% else %}no{% endif %}
+                </td>
+                <td>
+                    <span class="token" data-token="{{ token.token }}">{{ token.token }}</span>
+                </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+    {% if success %}
+        <a href="{{ url }}">{{ url }}</a>
+        <br />
+        <a class="btn" href="{{ url }}">Back to Page</a>
+        <a class="btn" href="{% url 'sharedurllist.views.main' %}#urltab_{{ token.device.name }}">Go to URL-List</a>
+    {% endif %}
+</div>
+{% endblock %}
