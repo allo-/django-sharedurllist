@@ -29,5 +29,23 @@
         }
     }
     $(".urltab").click(function(){window.location.hash = "urltab_" + $(this).attr("data-devicename")})
+    $("form[action='{% url "sharedurllist.views.delete_url" %}'] input[type=submit]").each(function(i, e){
+        $(e).hide();
+        var button = $("<input type='button' class='btn' value='del'>").bind("click", function(){
+            var form = $(e).parent();
+            var action = form.attr("action");
+            var data = {}
+            form.find("input").each(function(idx, obj){
+                form_field = $(obj);
+                data[form_field.attr("name")] = form_field.val();
+            })
+            ajaxRequest = $.ajax(action, {
+                "type": "post",
+                "data": data,
+                "success": function(){form.parent().hide()}
+            });
+        });
+        $(e).after(button)
+    });
 </script>
 {% endblock %}
